@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'theme/img/apple-icon.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'theme/img/favicon.png' %}">
+
+  
+  <title>
+    Property Management
+  </title>
+  {% include 'components/basecss.html' %}
+
+</head>
+
+<body class="g-sidenav-show  bg-gray-200">
+    
+    {% include 'components/sidebar.html' %}
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        {% include 'components/topnav.html' %}
+        {% block content %}
+        {% endblock %}
+    </main>
+    {% include 'components/basejs.html' %}
+    {% block page_js %}
+    {% endblock %}
+</body>
+
+</html>

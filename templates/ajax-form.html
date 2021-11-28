@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .errorlist{
+        display: none;
+    }
+</style>
+<form id='ajax-form' enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
+
+{% block page_js %}
+<script type='text/javascript'> 
+    $(document).on('submit', '#ajax-form', function(e){
+        e.preventDefault()
+        
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: {
+                block:$('#id_block').val(),
+                plot_num:$('#id_plot_num').val(),
+                area:$('#id_area').val(),
+                is_alloted:$('#id_is_alloted').val(),
+                files:$('#id_files').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+
+            },
+            
+        })
+        $('#ajax-form')[0].reset();
+    })
+</script>
+
+{% endblock %}

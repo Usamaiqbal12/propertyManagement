@@ -1,0 +1,29 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+
+{% if not request.user.is_authenticated %}
+<div class="container bg-light">
+<div style="margin-top: 30px">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading text-danger">Register</div>
+            <div class="panel-body">
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button class="btn btn-dribbble" type="submit">Register</button>
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    
+  </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% else %}
+<p>You are logged in and cannot register . Would you like to <a href="/logout/">logout</a>?</p>
+
+{% endif %}
+{% endblock %}

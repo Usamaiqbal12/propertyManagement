@@ -1,0 +1,86 @@
+{% extends "base.html" %} 
+{% block content %}
+{% load static %}
+<div class="container-fluid py-1 px-3">
+  <form action="/properties/search" method="GET">
+    
+    <input type="text" name="query">
+    <button type="submit">search</button>
+
+  </form>
+  <table class="table table-bordered" border="1">
+    <tr>
+      <td colspan="4">Property</td>
+    </tr>
+    <tr>
+      <th>Area</th>
+      <th>Block</th>
+      <th>Plot_num</th>
+      <th>Alloted</th>
+    </tr>
+    {% for i in res %}
+    <tr>
+      <td>{{i.area}}</td>
+      <td>{{i.block}}</td>
+      <td>{{i.plot_num}}</td>
+      {% if i.is_alloted %}
+      <td>This has been alloted</td>
+      {% else %}
+      <td>this has been not been alloted</td>
+      {% endif %}
+      <td><a href="{% url 'edit-property' i.id %}">Edit/Update</a></td>
+      <td><a href="{% url 'delete-record' i.id %}">Delete Record</a></td>
+    </tr>
+
+    {% endfor %}
+  
+  </table>
+
+  <a href="{% url 'add' %}">Create</a>
+  
+<!-- --------------------------------------------------------------------------- -->
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div id="property-user-list" >
+
+    {% if formset %}
+    <h3>ADD user</h3>
+    {{ formset.management_form }}
+    <div id="property-form-list" >
+     
+    </div>
+  <div id='empty-form' class="hidden">{{ formset.empty_form.as_p }}</div>
+  <button id="add-more" type="button">Add more Users</button>
+  <button style="margin-top:10px" type="submit">Save</button>
+    {% endif %}
+</div>
+</form>
+</div>
+    
+    {% endblock %}
+
+    {% block page_js %}
+    <script> 
+    const totalNewForms = document.getElementById('id_form-TOTAL_FORMS')
+      const addMoreBtn = document.getElementById('add-more')
+
+      addMoreBtn.addEventListener('click', add_new_form)
+      function add_new_form(event){
+        if(event){
+          event.preventDefault()
+        }
+        const currentPropertyForms = document.getElementsByClassName('property-form')
+        const currentFormCount = currentPropertyForms.length // +1
+        
+        const formCopyTarget = document.getElementById('property-form-list')
+        const copyEmptyFormEl = document.getElementById('empty-form').cloneNode(true)
+        copyEmptyFormEl.setAttribute('class', 'property-form')
+        copyEmptyFormEl.setAttribute('id', `form-${currentFormCount}`)
+        const regex = new RegExp('__prefix__', 'g')
+        copyEmptyFormEl.innerHTML = copyEmptyFormEl.innerHTML.replace(regex, currentFormCount)
+        totalNewForms.setAttribute('value', currentFormCount + 1)
+        formCopyTarget.append(copyEmptyFormEl)
+      }
+    </script>
+
+    {% endblock %}

@@ -1,0 +1,8 @@
+.hidden{
+    display: none;
+  }
+
+.form-control{
+    border: 1px solid #ced4da !important;
+}
+
