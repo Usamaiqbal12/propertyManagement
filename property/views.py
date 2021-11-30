@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from property.models import Property, PropertyUser
 from property.forms import PropertyForm, PropertyUserForm, PropertyUserFormset,property_update_formset
 from django.contrib.auth.decorators import login_required
-
+from django.urls import reverse
 # Create your views here.
 @login_required
 def all_properties(request, id=None):
@@ -25,7 +25,7 @@ def add_property(request):
             property_user = form.save(commit=False)
             property_user.property = property
             property_user.save()
-        return redirect('/property')
+        return redirect(reverse("list-properties"))
     return render(request, 'add_property.html', context=context)
 
 @login_required
@@ -75,7 +75,7 @@ def property_update_view(request, id=None):
 @login_required
 def property_delete_view(request, id=None):
     Property.objects.filter(id=id).delete()
-    return redirect('/property')
+    return redirect(reverse("list-properties"))
 
 # def delete_user_view(request, id=None):
 #     PropertyUser.objects.filter(id=id).delete()

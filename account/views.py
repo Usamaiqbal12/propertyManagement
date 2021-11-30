@@ -37,7 +37,7 @@ def property_login(request):
 def property_logout(request):
     if request.method =="POST":
         logout(request)
-        return redirect('/login/')
+        return redirect(reverse("login"))
     return render(request,'accounts/logout.html', {})
 
 
@@ -49,7 +49,7 @@ def property_register(request):
         user_obj.save()
         # token = token_generator.make_token(user_obj)
         send_confirmation_mail_task.delay(user_obj.pk, 'hello world')
-        return redirect('/login/')
+        return redirect(reverse("login"))
     context = {"form": form, "active_page": 'Register'}
     return render(request, 'accounts/register.html', context=context)
 
