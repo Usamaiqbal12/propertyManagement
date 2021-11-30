@@ -131,5 +131,5 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
 #             email_body,
 #             'noreply@semycolon.com',
 #             [user.email]
-#     )
+#                       )
 #     return email.send(fail_silently=False)
